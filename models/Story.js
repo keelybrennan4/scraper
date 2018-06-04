@@ -16,6 +16,7 @@ var storySchema = new Schema({
     required: true
   },
   content: String, 
+  img: String,
   date: { 
     type: Date, 
     default: Date.now 
