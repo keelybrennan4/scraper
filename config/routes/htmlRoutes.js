@@ -7,14 +7,14 @@ var cheerio = require("cheerio");
 //for server side ajax request 
 var request = require("request");
 
-let url = "https://techcrunch.com/";
-//since we have two instances of express -- one in server and one in htmlRoutes we want to send this route back to our server.js file where the server is listening
-router.get("/scrape", function(req, res){
-    //store all stories in an empty array 
-    var allStories = [];
-    //add request to site we want to scrape 
-    request(url, function(err, respense, body){
-        if (err) console.log(err);
+    let url = "https://techcrunch.com/";
+    //since we have two instances of express -- one in server and one in htmlRoutes we want to send this route back to our server.js file where the server is listening
+    router.get("/scrape", function(req, res){
+        //store all stories in an empty array 
+        var allStories = [];
+        //add request to site we want to scrape 
+        request(url, function(err, respense, body){
+            if (err) console.log(err);
 
         let $ = cheerio.load(body)
         // select the parent div 
@@ -32,8 +32,8 @@ router.get("/scrape", function(req, res){
         })
         //render hbs object 
         res.render("index", {stories : allStories});
-    }) 
-})
+    });
+});
 
 // export to use in server.js 
 module.exports = router;

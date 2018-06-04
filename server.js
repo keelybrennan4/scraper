@@ -35,13 +35,10 @@ app.use(bodyParser.json())
 //if deployed, connect to deployed databse. Otherwise, connect to localhost tcArticles db
 var mongoConnect = process.env.MONGODB_URI ||"mongodb://localhost/tcArticles"
 
-// connect to mongo db
+// connect to mongoose
 mongoose.connect(mongoConnect, function(error){
-    if (error){
-        console.log(error);
-    } else{
-        console.log("mongoose is connected");
-    }
+    if (error) console.log(error);
+    console.log("mongoose is connected");
 });
 
 app.listen(port, function(){
