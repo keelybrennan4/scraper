@@ -4,30 +4,27 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 // create a new storySchema object 
-var StorySchema = new Schema({
-  //url must be unique and of type string 
-  url: {
+var storySchema = new Schema({
+  title: {
     type: String,
+    required: true,
     unique: true,
-
-    //left in from documentation but adjust as needed 
-    title: String,
-    author: String,
-    body:   String,
-    comments: [
-      { 
-        body: String,
-        date: Date 
-      }
-    ]
   },
-  //notes stores ObjectIds. The ref property links these Object Ids to teh Note model -- so we can populate the Story with associated Notes 
-  notes: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Note"
-    }
-  ]
+  author: String,
+  url: {
+    type: String, 
+    required: true
+  },
+  content: String, 
+  date: { 
+    type: Date, 
+    default: Date.now 
+  },
+  //notes stores ObjectIds. The ref property links these Object Ids to the Note model -- so we can populate the Story with associated Notes 
+  notes: {
+    type: Schema.Types.ObjectId,
+    ref: "Note"
+  }
 });
 
 // use mongoose model method to create model from story Schema 
