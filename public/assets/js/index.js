@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+    console.log("index.js is connected");
     $(".storyBox").on("click", "h4", function(){
         let myStory = $(this).parent()
         //console.log("clicked!");
