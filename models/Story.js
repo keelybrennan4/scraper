@@ -20,6 +20,10 @@ var storySchema = new Schema({
     type: Date, 
     default: Date.now 
   },
+  saved: {
+    type: Boolean,
+    default: false
+  },
   //notes stores ObjectIds. The ref property links these Object Ids to the Note model -- so we can populate the Story with associated Notes 
   notes: {
     type: Schema.Types.ObjectId,
