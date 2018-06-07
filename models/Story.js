@@ -4,16 +4,16 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 // create a new storySchema object 
-var storySchema = new Schema({
+var StorySchema = new Schema({
   title: {
     type: String,
-    required: true,
+    //required: true,
     unique: true,
   },
   author: String,
   url: {
     type: String, 
-    required: true
+    //required: true
   },
   content: String, 
   img: String,

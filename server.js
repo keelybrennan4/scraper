@@ -5,8 +5,11 @@ var bodyParser = require("body-parser");
 var exphbs = require("express-handlebars");
 
 //require the router 
-var htmlRoutes = require("./config/routes/htmlRoutes")
-var apiRoutes = require("./config/routes/apiRoutes")
+var htmlRoutes = require("./routes/htmlRoutes")
+var apiRoutes = require("./routes/apiRoutes")
+
+//require models 
+var db = require("./models"); 
 
 //require mongoose
 var mongoose = require("mongoose");
@@ -40,6 +43,8 @@ mongoose.connect(mongoConnect, function(error){
     if (error) console.log(error);
     console.log("mongoose is connected");
 });
+
+mongoose.Promise = global.Promise;
 
 app.listen(port, function(){
     console.log("app is running");

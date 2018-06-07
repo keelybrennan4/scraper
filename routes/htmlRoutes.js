@@ -6,6 +6,8 @@ var router = express.Router();
 var cheerio = require("cheerio");
 //for server side ajax request 
 var request = require("request");
+//require models 
+var db = require("../models");
 
     let url = "https://techcrunch.com/";
     //since we have two instances of express -- one in server and one in htmlRoutes we want to send this route back to our server.js file where the server is listening
@@ -13,7 +15,7 @@ var request = require("request");
         //store all stories in an empty array 
         var allStories = [];
         //add request to site we want to scrape 
-        request(url, function(err, respense, body){
+        request(url, function(err, response, body){
             if (err) console.log(err);
 
         let $ = cheerio.load(body)
@@ -28,10 +30,21 @@ var request = require("request");
                 content: $(story).children(".post-block__content").text().trim(),
                 img: $(story).children(".post-block__footer").children().children().children("img").attr("src")
             }
+            // send to db
+            db.Story.create(oneStory)
+            //.then(function(oneStory){
+            //    console.log(oneStory);
+            //})
+            .catch(function(err){
+                console.log("some error!!!!!!!!")
+                //console.log(err);
+            });
+            //show to page - being tricky
             allStories.push(oneStory);
-        })
+        });
         //render hbs object 
         res.render("index", {stories : allStories});
+        //res.send("Scrape Complete");
     });
 });
 
