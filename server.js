@@ -31,20 +31,20 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 //if deployed, connect to deployed databse. Otherwise, connect to localhost tcArticles db
-var mongoConnect = process.env.MONGODB_URI ||"mongodb://localhost/tcArticles"
+var mongoConnect = process.env.MONGODB_URI ||"mongodb://localhost/tcArticles";
 
 // connect to mongoose
 mongoose.connect(mongoConnect, function(error){
     if (error) console.log(error);
     console.log("mongoose is connected");
 });
-
 mongoose.Promise = global.Promise;
+
 
 app.listen(port, function(){
     console.log("app is running");
