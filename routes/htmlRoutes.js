@@ -10,6 +10,12 @@ var request = require("request");
 //require models 
 var db = require("../models");
 
+module.exports = function(router){ 
+    router.get("/", function(req, res){
+        res.render("index")
+    });
+}
+
 let url = "https://techcrunch.com/";
 //since we have two instances of express -- one in server and one in htmlRoutes we want to send this route back to our server.js file where the server is listening
 router.get("/scrape", function (req, res) {
@@ -56,13 +62,12 @@ router.get("/stories", function(req, res){
             stories: stories
         };
         //console.log("stories", allStories);
-        res.render("index", allStories);
+        res.render("saved", allStories);
     })
     .catch(function(err){
         res.json(err);
     });
 });
-
 
 
 

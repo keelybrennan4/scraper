@@ -1,0 +1,29 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="overlay"></div>
+    <div class="background-image"></div>
+    <h1>Saved Articles</h1>
+</div>
+
+<div class="storyBox">
+    {{#each stories}}
+        <div class="data" dataTitle="{{title}}" dataLink="{{url}}" dataAuthor="{{author}}" dataContent="{{content}}" dataImg="{{img}}">
+
+        <h2><a href="{{url}}">{{title}}</a></h2>
+        
+        <p>{{content}}</p>
+
+        {{#if author}}
+            <h4>{{author}}</h4>
+        {{else}}
+            <h4>No author</h4>
+        {{/if}}
+
+        {{#if img}}
+            <img src="{{img}}" alt="story">
+        {{else}}
+            <img src="http://placehold.it/150" alt="no preview">
+        {{/if}}
+
+     </div>   
+    {{/each}}
+</div>

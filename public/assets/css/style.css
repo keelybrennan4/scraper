@@ -1,3 +1,9 @@
-h1{
-    color: purple;
+.storyBox{
+    width: 700px;
+    border: 1px;
+    background-color: white;
+}
+.jumbotron{
+    text-align: center;
+    height: 200px;
 }
