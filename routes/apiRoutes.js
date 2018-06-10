@@ -2,9 +2,11 @@ var express = require("express");
 var router = express.Router();
 var Story = require("../models/Story");
 
-router.get("/", function(req, res){
-    res.send("yay");
-});
+//router.get("/", function(req, res){
+ //   res.send("yay");
+//});
+
+
 
 // //get all stories from db and display on web page in json format
 // router.get("/stories", function (req, res) {

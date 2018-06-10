@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var StorySchema = new Schema({
   title: {
     type: String,
-    //required: true,
+    required: true,
     unique: true,
   },
   author: String,

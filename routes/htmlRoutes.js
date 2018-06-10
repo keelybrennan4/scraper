@@ -53,6 +53,18 @@ router.get("/scrape", function (req, res) {
     res.status(200).end();
 });
 
+//route to render the home page 
+router.get("/", function(req, res){
+    res.render("index");
+});
+
+//route renders the saved hbs page 
+router.get("/saved", function(req, res){
+    res.render("saved");
+});
+
+
+
 //route to get all articles from the db
 router.get("/stories", function(req, res){ 
     //grab all documents
