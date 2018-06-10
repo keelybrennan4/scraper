@@ -1,31 +1,35 @@
-<div class="heading">
-    <h1>Tech Crunch Mongo Scraper</h1>
-    <p class="sub-text">Stay up to date on your Tech Crunch news by reading the headlines here. 
-       <br>
-        Click on a headline to read the full article, save articles for later, or leave a note on an article.</p>
-        <hr>
-</div>
+<div class="container">
+    <div class="col-md-12">
 
-<div class="storyBox">
-    {{#each stories}}
-        <div class="data" dataTitle="{{title}}" dataLink="{{url}}" dataAuthor="{{author}}" dataContent="{{content}}" dataImg="{{img}}">
+        <div class="heading">
+            <h1>Tech Crunch Mongo Scraper</h1>
+            <p class="sub-text">Stay up to date on your Tech Crunch news by reading the headlines here.
+                <br> Click on a headline to read the full article, save articles for later, or leave a note on an article.</p>
+            <hr>
+        </div>
 
-        <h2><a href="{{url}}">{{title}}</a></h2>
-        
-        <p>{{content}}</p>
 
-        {{#if author}}
-            <h4>{{author}}</h4>
-        {{else}}
-            <h4>No author</h4>
-        {{/if}}
+        <div class="col-md-12 storyBox">
+            {{#each stories}}
+            <div class="data" dataTitle="{{title}}" dataLink="{{url}}" dataAuthor="{{author}}" dataContent="{{content}}" dataImg="{{img}}">
 
-        {{#if img}}
-            <img src="{{img}}" alt="story">
-        {{else}}
-            <img src="http://placehold.it/150" alt="no preview">
-        {{/if}}
+                <h2>
+                    <a href="{{url}}">{{title}}</a>
+                </h2>
 
-     </div>   
-    {{/each}}
+                <p class="content">{{content}}</p>
+
+                {{#if author}}
+                <h4>{{author}}</h4>
+                {{else}}
+                <h4>No author</h4>
+                {{/if}} {{#if img}}
+                <img src="{{img}}" alt="story"> {{else}}
+                <img src="http://placehold.it/150" alt="no preview"> {{/if}}
+
+            </div>
+            {{/each}}
+            <hr>
+        </div>
+    </div>
 </div>

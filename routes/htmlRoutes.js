@@ -47,11 +47,10 @@ router.get("/scrape", function (req, res) {
     res.send("Scrape Complete");
 });
 
-
 //when home page loads, get all articles from the db
 router.get("/", function(req, res){ 
     //grab all documents
-    db.Story.find()
+    db.Story.find({})
     .then(function(stories){
         let allStories = {
             stories: stories
@@ -65,12 +64,12 @@ router.get("/", function(req, res){
 });
 
 //route to render the saved articles 
-router.get("/saved", function(req, res){
+router.get("/stories", function(req, res){
     db.Story.find({
         "saved": true
     })
-    .populate("comments")
-    .then(function(stories){
+    .populate("notes")
+    .exec(function(err, stories){
         let allStories = {
             stories: stories
         };
@@ -78,11 +77,84 @@ router.get("/saved", function(req, res){
     });
 });
 
+//route to get saved story by id 
+router.get("/stories/:id", function (req,res){
+    db.Story.findOne({
+        "_id": req.params.id
+    })
+    .populate("notes")
+    .exec(function(err, stories){
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json(stories);
+        }
+    });
+});
+
+// save story 
+router.post("/stories/save/:id", function (req,res){
+    db.Story.findOneAndUpdate({
+        "_id": req.params.id
+    }, {
+        "saved": true
+    })
+    .exec(function(err, stories){
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json(stories);
+        }
+    });
+});
+
+//delete story 
+router.post("/stories/delete/:id", function (req,res){
+    console.log("deleted");
+
+    db.Story.findOneAndUpdate({
+        "_id": req.params.id
+    }, {
+        "saved": false
+    })
+    .exec(function(err, stories){
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json(stories);
+        }
+    });
+});
+
+//add notes to an article 
+router.post("/notes/save/:id", function (req,res){
+    console.log("notes added");
+    
+
+
+
+    db.Story.findOneAndUpdate({
+            "_id": req.params.id
+        }, {
+            "saved": false
+        })
+        .exec(function(err, notes){
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.send(notes);
+            }
+        });
+});
 
 
 
 
-
+//delete notes from an article 
 
 
 
