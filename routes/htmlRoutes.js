@@ -10,12 +10,6 @@ var request = require("request");
 //require models 
 var db = require("../models");
 
-module.exports = function(router){ 
-    router.get("/", function(req, res){
-        res.render("index")
-    });
-}
-
 let url = "https://techcrunch.com/";
 //since we have two instances of express -- one in server and one in htmlRoutes we want to send this route back to our server.js file where the server is listening
 router.get("/scrape", function (req, res) {
@@ -43,30 +37,19 @@ router.get("/scrape", function (req, res) {
                 .catch(function (err) {
                     console.log("not posting duplicates to db when scraped again 🖖");
                 });
-            //show to page while pushing to db - being tricky
+            //on page load, show  all articles on page while pushing to db
             //allStories.push(oneStory);
         });
         //render hbs object 
         //res.render("index", { stories: allStories });  
     });
     //when scrape is complete
-    res.status(200).end();
-});
-
-//route to render the home page 
-router.get("/", function(req, res){
-    res.render("index");
-});
-
-//route renders the saved hbs page 
-router.get("/saved", function(req, res){
-    res.render("saved");
+    res.send("Scrape Complete");
 });
 
 
-
-//route to get all articles from the db
-router.get("/stories", function(req, res){ 
+//when home page loads, get all articles from the db
+router.get("/", function(req, res){ 
     //grab all documents
     db.Story.find()
     .then(function(stories){
@@ -74,10 +57,24 @@ router.get("/stories", function(req, res){
             stories: stories
         };
         //console.log("stories", allStories);
-        res.render("saved", allStories);
+        res.render("index", allStories);
     })
     .catch(function(err){
         res.json(err);
+    });
+});
+
+//route to render the saved articles 
+router.get("/saved", function(req, res){
+    db.Story.find({
+        "saved": true
+    })
+    .populate("comments")
+    .then(function(stories){
+        let allStories = {
+            stories: stories
+        };
+    res.render("saved", allStories);
     });
 });
 
