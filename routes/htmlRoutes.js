@@ -46,7 +46,7 @@ router.get("/scrape", function (req, res) {
 //when home page loads, get all articles from the db
 router.get("/", function(req, res){ 
     //grab all documents
-    db.Story.find({})
+    db.Story.find().sort({date: -1})
     .then(function(stories){
         let allStories = {
             stories: stories
@@ -64,7 +64,7 @@ router.get("/stories", function(req, res){
     db.Story.find({
         "saved": true
     })
-    .populate("notes")
+    .populate("notes").sort({date: -1})
     .exec(function(err, stories){
         let allStories = {
             stories: stories
