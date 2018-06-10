@@ -35,16 +35,12 @@ router.get("/scrape", function (req, res) {
             //send to db -- create an article in tcArticles collection
             db.Story.create(oneStory)
                 .catch(function (err) {
-                    console.log("not posting duplicates to db when scraped again 🖖");
+                    console.log("scrape was successful. Not posting duplicates to db when article is scraped again 🖖");
                 });
-            //on page load, show  all articles on page while pushing to db
-            //allStories.push(oneStory);
         });
-        //render hbs object 
-        //res.render("index", { stories: allStories });  
     });
     //when scrape is complete
-    res.send("Scrape Complete");
+    res.send("Scrape Complete")
 });
 
 //when home page loads, get all articles from the db
@@ -132,35 +128,62 @@ router.post("/stories/delete/:id", function (req,res){
 //add notes to an article 
 router.post("/notes/save/:id", function (req,res){
     console.log("notes added");
-    
-
-
-
-    db.Story.findOneAndUpdate({
-            "_id": req.params.id
-        }, {
-            "saved": false
-        })
-        .exec(function(err, notes){
-            if (err) {
-                console.log(err);
-            }
-            else {
-                res.send(notes);
-            }
-        });
-        
+    var newNotes = new Notes({
+        body: req.body.text,
+        article: req.params.id
+    });
+    newNotes.save(function (err, notes){
+        console.log(notes.body);
+        if (err){
+            console.log(err)
+        }else {
+            db.Story.findOneAndUpdate({
+                "_id": req.params.id
+            }, {
+                $push: {
+                    "notes": notes
+                }
+            })
+            .exec(function(err, notes){
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    res.send(notes);
+                }
+            });
+        }
+    });    
 });
 
-
-
-
 //delete notes from an article 
-
-
-
-
-
+router.delete("/notes/delete/:notes_id/:stories_id", function (req,res){
+    Notes.findOneAndRemove({
+        "_id": req.params.notes_id
+    }, function (err){
+        if (err){
+            conosole.log(err);
+            res.send(err);
+        }else{
+            db.Stories.findOneAndUpdate({
+                "_id": req.params.notes_id
+            }, {
+                $pull: {
+                    "notes": req.params.stories_id
+                }
+            })
+            .exec(function (err){
+                if (err){
+                    console.log(err);
+                    res.send(err)
+                } else {
+                    res.send("Note Deleted!");
+                }
+            });
+        }
+    });
+});
+    
 
 // export to use in server.js 
 module.exports = router;
