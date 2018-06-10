@@ -64,7 +64,7 @@ router.get("/stories", function(req, res){
     db.Story.find({
         "saved": true
     })
-    .populate("notes").sort({date: -1})
+    .populate("notes")
     .exec(function(err, stories){
         let allStories = {
             stories: stories
